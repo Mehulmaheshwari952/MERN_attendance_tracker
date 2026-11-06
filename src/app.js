@@ -16,4 +16,7 @@ async function connectDB() {
 
 const app = express();
 
+app.use("/api/attendance", require('./routes/attendanceRoutes'));
+app.use("/api/courses", require('./routes/courseRoutes'));
+
 module.exports = {app, connectDB};
