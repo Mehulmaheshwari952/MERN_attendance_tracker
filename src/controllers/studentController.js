@@ -1,4 +1,14 @@
 const Student = require('../models/Student');
+const Course = require('../models/Course');
+
+const getAllStudents = async (req, res) => {
+    try {
+        const students = await Student.find();
+        res.status(200).json({ students });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching students', error: error.message });
+    }
+};
 
 const addNewStudent = async (req, res) => {
     try {
@@ -55,6 +65,7 @@ const getStudentAttendance = async (req, res) => {
 };
 
 module.exports = {
+    getAllStudents,
     addNewStudent,
     enrollStudent,
     getStudentCourses,

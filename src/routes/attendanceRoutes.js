@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Attendance = require('../models/Attendance');
 const Student = require('../models/Student');
 const Course = require('../models/Course');
+const attendanceController = require('../controllers/attendanceController');
 
 // Create a new attendance record
 router.post('/mark',attendanceController.markAttendance);
