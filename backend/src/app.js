@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const path = require('path');
 require('dotenv').config();
 
 async function connectDB() {
@@ -15,6 +16,7 @@ async function connectDB() {
 const app = express();
 
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, '../../frontend')));
 app.get("/", (req, res) => {
     res.send("Welcome to the Attendance Tracker API");
 });

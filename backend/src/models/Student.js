@@ -15,6 +15,10 @@ const StudentSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    courses: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course'
+    }]
 });
 
 const Student = mongoose.model('Student', StudentSchema);

@@ -14,6 +14,14 @@ const CourseSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    TotalClasses: {
+        type: Number,
+        required: true,
+    },
+    students: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Student',
+    }],
 });
 
 const Course = mongoose.model('Course', CourseSchema);

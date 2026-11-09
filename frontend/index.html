@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f7fb">
+    <title>Attendly · Attendance dashboard</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./index.js" defer></script>
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="/" aria-label="Attendly home">
+                <span class="brand-mark">A</span>
+                <span>attendly<span class="brand-period">.</span></span>
+            </a>
+            <p class="sidebar-label">WORKSPACE</p>
+            <a class="nav-link active" href="#overview"><span class="nav-icon">▦</span>Overview</a>
+            <a class="nav-link" href="#attendance"><span class="nav-icon">✓</span>Attendance</a>
+            <a class="nav-link" href="#manage"><span class="nav-icon">＋</span>Manage records</a>
+            <div class="sidebar-bottom">
+                <div class="sidebar-note">
+                    <span class="note-icon">✦</span>
+                    <strong>Stay on track</strong>
+                    <p>Keep attendance up to date to spot students who may need support.</p>
+                </div>
+                <span class="sidebar-version">ATTENDANCE TRACKER</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="breadcrumb">Workspace <span>/</span> Overview</div>
+                <div class="profile-chip"><span class="profile-avatar">A</span><span>Administrator</span></div>
+            </header>
+
+            <div class="content">
+                <div class="page-heading" id="overview">
+                    <div>
+                        <p class="eyebrow">YOUR CLASSROOM AT A GLANCE</p>
+                        <h1>Overview</h1>
+                        <p class="subtitle">Manage attendance and keep every student moving forward.</p>
+                    </div>
+                    <a class="primary-button heading-button" href="#attendance">＋ <span>Mark attendance</span></a>
+                </div>
+
+                <div id="notice" class="notice" role="status" aria-live="polite"></div>
+
+                <section class="stats-grid" aria-label="Dashboard summary">
+                    <article class="stat-card">
+                        <div class="stat-top"><span class="stat-icon blue">♙</span><span class="stat-caption">ALL RECORDS</span></div>
+                        <strong id="student-count" class="stat-value">—</strong>
+                        <span class="stat-label">Students</span>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-top"><span class="stat-icon violet">▤</span><span class="stat-caption">IN YOUR WORKSPACE</span></div>
+                        <strong id="course-count" class="stat-value">—</strong>
+                        <span class="stat-label">Courses</span>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-top"><span class="stat-icon green">✓</span><span class="stat-caption">MARKED SO FAR</span></div>
+                        <strong id="attendance-count" class="stat-value">—</strong>
+                        <span class="stat-label">Attendance records</span>
+                    </article>
+                    <article class="stat-card risk-stat">
+                        <div class="stat-top"><span class="stat-icon orange">!</span><span class="stat-caption">SELECTED COURSE</span></div>
+                        <strong id="risk-count" class="stat-value">—</strong>
+                        <span class="stat-label">Students at risk <span class="threshold">below 75%</span></span>
+                    </article>
+                </section>
+
+                <section class="panel attendance-panel" id="attendance">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">LIVE COURSE VIEW</p>
+                            <h2>Attendance overview</h2>
+                            <p id="course-summary" class="panel-subtitle">Choose a course to view its attendance.</p>
+                        </div>
+                        <label class="select-wrap">
+                            <span class="sr-only">Course to review</span>
+                            <select id="attendance-course" aria-label="Course to review"></select>
+                            <span class="select-chevron">⌄</span>
+                        </label>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>STUDENT</th><th>PRESENT / MARKED</th><th>ATTENDANCE</th><th>STATUS</th></tr></thead>
+                            <tbody id="roster"><tr><td class="empty-state" colspan="4">Loading attendance…</td></tr></tbody>
+                        </table>
+                    </div>
+                    <div class="panel-footnote"><span class="legend-dot"></span> Attendance below 75% is flagged as at risk. Rate is based on records marked for the selected course.</div>
+                </section>
+
+                <div class="lower-grid">
+                    <section class="panel mark-panel">
+                        <div class="panel-heading compact">
+                            <div><p class="eyebrow">QUICK ACTION</p><h2>Mark attendance</h2></div>
+                            <span class="heading-symbol green">✓</span>
+                        </div>
+                        <form id="attendance-form" class="form-grid">
+                            <label>Course
+                                <select name="courseId" id="mark-course" required></select>
+                            </label>
+                            <label>Student
+                                <select name="studentId" id="attendance-student" required></select>
+                            </label>
+                            <label>Date
+                                <input name="date" id="attendance-date" type="date" required>
+                            </label>
+                            <label>Status
+                                <select name="status" required>
+                                    <option value="Present">Present</option>
+                                    <option value="Absent">Absent</option>
+                                </select>
+                            </label>
+                            <button class="primary-button form-submit" type="submit">Save attendance <span>→</span></button>
+                        </form>
+                    </section>
+
+                    <section class="panel manage-panel" id="manage">
+                        <div class="panel-heading compact">
+                            <div><p class="eyebrow">BUILD YOUR WORKSPACE</p><h2>Manage records</h2></div>
+                            <span class="heading-symbol violet">＋</span>
+                        </div>
+                        <div class="manage-forms">
+                            <form id="student-form" class="mini-form">
+                                <h3>Add a student</h3>
+                                <label>Full name<input name="name" placeholder="e.g. Maya Chen" required></label>
+                                <label>Email<input name="email" type="email" placeholder="maya@example.com" required></label>
+                                <label>Roll number<input name="rollNumber" placeholder="e.g. CS-024" required></label>
+                                <button class="secondary-button" type="submit">Add student <span>→</span></button>
+                            </form>
+                            <form id="course-form" class="mini-form">
+                                <h3>Create a course</h3>
+                                <label>Course name<input name="name" placeholder="e.g. Human-computer interaction" required></label>
+                                <label>Course code<input name="code" placeholder="e.g. HCI204" required></label>
+                                <label>Instructor<input name="instructor" placeholder="e.g. Alex Morgan" required></label>
+                                <label>Total classes<input name="TotalClasses" type="number" min="1" placeholder="e.g. 30" required></label>
+                                <button class="secondary-button" type="submit">Create course <span>→</span></button>
+                            </form>
+                            <form id="enrollment-form" class="mini-form enrollment-form">
+                                <h3>Enroll in a course</h3>
+                                <label>Student<select name="studentId" id="enrollment-student" required></select></label>
+                                <label>Course<select name="courseId" id="enrollment-course" required></select></label>
+                                <button class="secondary-button" type="submit">Enroll student <span>→</span></button>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+                <footer class="footer">Attendly <span>·</span> A clearer view of classroom attendance</footer>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

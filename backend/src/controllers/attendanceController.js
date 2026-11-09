@@ -5,8 +5,8 @@ const Course = require('../models/Course');
 
 const markAttendance = async (req, res) => {
     try {
-        const { studentId, courseId, date, status } = req.body;
-        date = date? date : new Date(now());
+        const { studentId, courseId, status } = req.body;
+        const date = req.body.date ? new Date(req.body.date) : new Date();
         const exists = await Attendance.findOne({ studentId, courseId, date });
         if (exists) {
             return res.status(400).json({ message: 'Attendance already marked for this student and course on this date' });
